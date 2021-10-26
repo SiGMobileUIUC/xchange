@@ -6,6 +6,24 @@ void main() {
   runApp(const MyApp());
 }
 
+class RequestItem extends StatelessWidget {
+    String a = "";
+    String b = "";
+    RequestItem(String a, String b) {
+    this.a = a;
+    this.b = b;
+  }
+  Widget build(BuildContext context) {
+    return Container (
+      child: Row(
+        children: [
+          Text(a),
+          Text(b),
+        ],
+      ),
+    );
+  }
+}
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -26,7 +44,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.red,
       ),
-      home: const MyHomePage(title: 'Billy bob'),
+      home: const MyHomePage(title: 'xChange'),
     );
   }
 }
@@ -55,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       var messageController = TextEditingController();
    final _formKey = GlobalKey<FormState>();
   int bob = 5;
-   List<String> entries = <String>[];
+   List<RequestItem> entries = <RequestItem>[];
    List<int> colorCodes = <int>[];
   void _incrementCounter() {
     //entries.add(_counter.toString());
@@ -74,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: InkResponse(
                             onTap: () {
                               Navigator.of(context).pop();
+                              
                             },
                             child: CircleAvatar(
                               child: Icon(Icons.close),
@@ -104,9 +123,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                   child: Text("Submit"),
                                   onPressed: () {
                                      String email = emailController.text.toString();
+                                     String name = messageController.text.toString();
                                      
-                                      entries.add(email);
+                                      entries.add(new RequestItem(email, name));
                                       colorCodes.add(min(_counter*100, 900));
+                                      setState(() {});
                                   },
                                 ),
                               )
@@ -149,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return Container(
               height: 50,
               color: Colors.amber[colorCodes[index]],
-              child: Center(child: Text('Item ${entries[index]}')),
+              child: Center(child: entries[index]),
             );
           }),
       floatingActionButton: FloatingActionButton(
